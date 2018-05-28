@@ -4,15 +4,17 @@
 #include <cmath>
 #include <stdio.h>
 
-int suma(std::vector<int> & y, int i);
+double selfco(std::vector<int> & s, double r, int N);
 
-int main ()
+int main(void)
 {
   FILE * pFile;
-  int N=32;
+  int N=31; 
+  // int N=2;
   std::vector<int> s(N*N);
+  double r = std::sqrt(2);
  
-  pFile = fopen("ising2d-5.txt", "r");
+  pFile = fopen("ising2d-1.25.txt", "r");
 
   fprintf (pFile, "%d");
 
@@ -27,10 +29,46 @@ int main ()
     std::cout << std::endl;
   }
 
+  double co = selfco(s,r,N)/(N*N);
+
+  std::cout << selfco(s,r,N)<< "\t" << N*N << "\t" << co << std::endl;
 
   return 0;
 }
 
+
+double selfco(std::vector<int> & s, double r, int N)
+{
+  int m;
+  int selfco=0;
+
+  for(int l=0; l<N; ++l){
+    for(int k=0; k<N; ++k){
+  
+      //derecha
+      for(m=1; m<=r; ++m){
+	selfco += s[(N*l)+((k+m)%N)]*s[(N*l)+k];
+      } 
+
+      //izquierda
+      for(m=1; m<=r; ++m){
+	selfco += s[(N*l)+((k+N-m)%N)]*s[(N*l)+k];
+      }  
+
+      //abajo
+      for(m=1; m<=r; ++m){
+	selfco += s[(N*((l+m)%N))+k]*s[(N*l)+k];
+      } 
+
+      //arriba
+      for(m=1; m<=r; ++m){
+	selfco += s[(N*((l+N-m)%N))+k]*s[(N*l)+k];
+      } 
+    }
+  }
+
+  return selfco;
+}
 
 
 /*
