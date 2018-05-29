@@ -17,7 +17,7 @@ int main(void)
   // int N=2;
    std::vector<int> s(N*N);
   
-  pFile = fopen("ising2d-5.txt", "r");
+  pFile = fopen("ising2d-3.txt", "r");
   fprintf (pFile, "%d");
   //para generar la matriz de forma correcta 
   for(int l=0; l<N; ++l){
@@ -30,7 +30,7 @@ int main(void)
   }
 
   // print(s,N);
-  radios(s,N, "radios-5.txt");
+  radios(s,N, "radios-3.txt");
 
   return 0;
 }
@@ -100,10 +100,11 @@ void radios(std::vector<int> & s,int N, std::string name){
 
   std::ofstream fout(name);
 
-  for(int i=1,j=1; i<N,j<N; ++i, ++j){
-    double r=std::sqrt((i*i)+(j*j));
-    double selfcon = selfco(s,i,j,N)/(N*N);//Autocorrelación normalizada
-    double selfcon1 = selfco1(s,i,j,N)/(N*N);//Autocorrelación normalizada
+  for(int i=0, j=0; i<N, j<N; ++i, ++j){
+    //for(int j=0; j<N; ++j){
+      double r=std::sqrt((i*i)+(j*j));
+      double selfcon = selfco(s,i,j,N)/(N*N);//Autocorrelación normalizada
+      double selfcon1 = selfco1(s,i,j,N)/(N*N);//Autocorrelación normalizada
     /*
     std::cout << selfco(s,i,j,N) << "\t" << N*N << selfco1(s,i,j,N) << std::endl;
     std::cout << "i = " << i << "\t" << "j = " << j << "\t" << "r = " << r << std::endl;
@@ -111,11 +112,11 @@ void radios(std::vector<int> & s,int N, std::string name){
     std::cout << "Autocorrelación promedio 1= " << selfcon1 << std::endl;
     std::cout << std::endl;
     */
-    fout << r << "\t" << selfcon << "\t" << selfcon1 << std::endl;
+      fout << r << "\t" << selfcon << "\t" << selfcon1 << std::endl;
+      // }
   }
   fout.close();
 }
-
 /*
 int main()
 {
